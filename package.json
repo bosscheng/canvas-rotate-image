@@ -1,0 +1,5 @@
+{
+  "name": "canvas-rotate-image",
+  "version": "0.0.1",
+  "description": "canvas 旋转并压缩图片，支持 90，-90，180，压缩图片尺寸。"
+}

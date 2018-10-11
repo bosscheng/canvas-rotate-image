@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        .show-dom {
+            max-width: 100%;
+            max-height: 1000px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<input type="file" accept="image/*" id="fileSelect">
+<div>
+    旋转角度
+    <select id="change">
+        <option value="">原始</option>
+        <option value="90">顺时针90</option>
+        <option value="-90">逆时针90</option>
+        <option value="180">旋转180</option>
+    </select>
+    最大宽度：
+    <input type="text" value="750" id="maxWidth">
+    最大高度：
+    <input type="text" value="750" id="maxHeight">
+
+</div>
+<div class="show-dom">
+    <img src="" alt="" id="showImg">
+</div>
+<script src="./canvas-rotate-image.js"></script>
+<script>
+    var $fileDom = document.getElementById('fileSelect');
+    var $change = document.getElementById('change');
+    var $imageDOM = document.getElementById('showImg');
+    var $maxWidth = document.getElementById('maxWidth');
+    var $maxHeight = document.getElementById('maxHeight');
+
+    var fileReader = new FileReader();
+    var rotate = 0;
+    var imgBase64 = '';
+    var maxWidth = '';
+    var maxHeight = '';
+
+    //
+    $fileDom.onchange = function (ev) {
+        var file = this.files[0];
+        fileReader.readAsDataURL(file);
+    };
+
+    //
+    $change.onchange = function () {
+        rotate = this.value;
+        _updateImg();
+    };
+
+    //
+    fileReader.onload = function (e) {
+        imgBase64 = e.target.result;
+        _updateImg();
+    };
+
+    //
+    function _updateImg() {
+        $imageDOM.src = '';
+        maxWidth = $maxWidth.value;
+        maxHeight = $maxHeight.value;
+        window.rotateImg(imgBase64, rotate, maxWidth, maxHeight, function (base64) {
+            $imageDOM.src = base64;
+        });
+    }
+
+</script>
+</body>
+</html>
