@@ -10,7 +10,7 @@
         }
 
         if (rotate) {
-            if (rotate != '90' && rotate != '-90' && rotate != '180') {
+            if (rotate !== '90' && rotate !== '-90' && rotate !== '180') {
                 rotate = null;
             }
         }
@@ -57,7 +57,7 @@
                     transY: 0
                 };
                 var scale = 0;
-                if (rotate == '180') {
+                if (rotate === '180') {
                     angle = Math.PI;
                     _setting.dw = targetWidth;
                     _setting.dh = targetHeight;
@@ -66,15 +66,12 @@
                     context2.translate(0, 0);
                 }
                 else {
-                    if (rotate == '90') {
+                    if (rotate === '90') {
                         angle = 90 * (Math.PI / 180);
                     }
-                    else if (rotate == '-90') {
+                    else if (rotate === '-90') {
                         angle = -90 * (Math.PI / 180);
                     }
-                    canvas2.width = targetHeight;
-                    canvas2.height = targetWidth;
-
                     _setting.transX = parseFloat(targetHeight / 2);
                     _setting.transY = parseFloat(targetWidth / 2);
                     _setting.dw = targetHeight;
