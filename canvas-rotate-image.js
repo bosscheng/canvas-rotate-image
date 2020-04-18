@@ -1,4 +1,12 @@
 !(function () {
+    /**
+     *
+     * @param imgBase64  图片的 base64
+     * @param rotate 旋转角度
+     * @param maxW 压缩的最大宽度
+     * @param maxH 压缩的最大高度
+     * @param callback 回调函数。
+     */
     function rotateImg(imgBase64, rotate, maxW, maxH, callback) {
         var img = new Image();
         img.src = imgBase64;
