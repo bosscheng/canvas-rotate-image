@@ -26,7 +26,7 @@
     <input type="text" value="750" id="maxWidth">
     最大高度：
     <input type="text" value="750" id="maxHeight">
-
+    <input type="button" value="下载" id="download">
 </div>
 <div class="show-dom">
     <img src="" alt="" id="showImg">
@@ -38,12 +38,14 @@
     var $imageDOM = document.getElementById('showImg');
     var $maxWidth = document.getElementById('maxWidth');
     var $maxHeight = document.getElementById('maxHeight');
+    var $downloadBtn = document.getElementById('download');
 
     var fileReader = new FileReader();
     var rotate = 0;
     var imgBase64 = '';
     var maxWidth = '';
     var maxHeight = '';
+    var resultBase64 = '';
 
     //
     $fileDom.onchange = function (ev) {
@@ -56,6 +58,12 @@
         rotate = this.value;
         _updateImg();
     };
+
+    $downloadBtn.addEventListener('click', function () {
+        if (resultBase64) {
+            _downloadImg(_dataURLToFile(resultBase64));
+        }
+    }, false);
 
     //
     fileReader.onload = function (e) {
@@ -70,7 +78,27 @@
         maxHeight = $maxHeight.value;
         window.rotateImg(imgBase64, rotate, maxWidth, maxHeight, function (base64) {
             $imageDOM.src = base64;
+            resultBase64 = base64;
         });
+    }
+
+    function _dataURLToFile(base64) {
+        var arr = base64.split(",");
+        var bstr = atob(arr[1]);
+        var type = arr[0].replace("data:", "").replace(";base64", "")
+        let n = bstr.length, u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], 'file', {type});
+    }
+
+    function _downloadImg(content) {
+        var aLink = document.createElement("a");
+        aLink.download = 'filename';
+        aLink.href = URL.createObjectURL(content);
+        aLink.click();
+        URL.revokeObjectURL(content);
     }
 
 </script>
